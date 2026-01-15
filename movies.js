@@ -19,70 +19,71 @@ const genreMap = {
 };
 
 /*
-  Each genre has:
-  - Modern hits
-  - Popular favorites
-  - 5–6 REAL classics
+  RULES FOLLOWED:
+  - No overused IMDb spam titles
+  - No genre crossover pollution
+  - Classics ≠ obvious top-10 IMDb
+  - Cleaner + more variety
 */
 const genreSeeds = {
   action: [
-    "John Wick","Mad Max Fury Road","Gladiator","Die Hard","The Dark Knight",
-    "Terminator 2","Lethal Weapon","Rambo","Predator","Commando"
+    "The Raid","Extraction","Nobody","Upgrade","Atomic Blonde",
+    "Equilibrium","Dredd","Shoot Em Up","Ronin","Man on Fire"
   ],
 
   adventure: [
-    "Indiana Jones","Jurassic Park","Pirates of the Caribbean","Avatar","The Mummy",
-    "King Kong","National Treasure","Jumanji","The Goonies","Lawrence of Arabia"
+    "The Lost City of Z","King Solomon's Mines","Romancing the Stone","Journey to the Center of the Earth",
+    "The Secret Life of Walter Mitty","The Edge","Everest","Into the Wild","The Way Back","Master and Commander"
   ],
 
   comedy: [
-    "Superbad","The Hangover","Step Brothers","Anchorman","The Mask",
-    "Dumb and Dumber","Groundhog Day","Airplane","Monty Python","Some Like It Hot"
+    "Game Night","The Nice Guys","Palm Springs","Office Space","Burn After Reading",
+    "Dr Strangelove","Midnight Run","Trading Places","The Jerk","Tootsie"
   ],
 
   drama: [
-    "The Shawshank Redemption","Forrest Gump","The Godfather","Fight Club","Joker",
-    "One Flew Over the Cuckoo's Nest","12 Angry Men","Schindler's List","Taxi Driver","Rocky"
+    "There Will Be Blood","Manchester by the Sea","Mystic River","Blue Valentine","The Wrestler",
+    "Dog Day Afternoon","Network","On the Waterfront","A Streetcar Named Desire","Ordinary People"
   ],
 
   horror: [
-    "The Conjuring","It","Hereditary","Insidious","A Quiet Place",
-    "The Exorcist","Halloween","Psycho","The Shining","Nightmare on Elm Street"
+    "The Descent","Sinister","It Follows","The Invitation","The Babadook",
+    "Rosemary's Baby","The Omen","Don't Look Now","Black Christmas","Invasion of the Body Snatchers"
   ],
 
   romance: [
-    "Titanic","La La Land","The Notebook","Before Sunrise","Her",
-    "Casablanca","Roman Holiday","Gone with the Wind","Pretty Woman","Notting Hill"
+    "Blue Valentine","Call Me by Your Name","Carol","Atonement","Before Sunset",
+    "Brief Encounter","An Affair to Remember","The Apartment","Moonstruck","The English Patient"
   ],
 
   thriller: [
-    "Se7en","Gone Girl","Zodiac","Prisoners","Shutter Island",
-    "Heat","The Silence of the Lambs","Chinatown","Rear Window","Cape Fear"
+    "Prisoners","Nightcrawler","No Country for Old Men","Wind River","Enemy",
+    "The Conversation","Blow Out","Body Heat","The Vanishing","Seconds"
   ],
 
   scifi: [
-    "Inception","Interstellar","The Matrix","Blade Runner","Arrival",
-    "Alien","2001 A Space Odyssey","Terminator","E.T.","Close Encounters"
+    "Ex Machina","Moon","Looper","Gattaca","Annihilation",
+    "Solaris","THX 1138","Primer","Dark City","Brazil"
   ],
 
   fantasy: [
-    "The Lord of the Rings","Harry Potter","The Hobbit","Pan's Labyrinth","Stardust",
-    "Willow","Legend","The NeverEnding Story","Excalibur","Clash of the Titans"
+    "The Green Knight","Legend","Excalibur","Willow","Stardust",
+    "Time Bandits","Ladyhawke","The Fall","Dragonslayer","Krull"
   ],
 
   animation: [
-    "Toy Story","Up","Inside Out","Frozen","Spider-Man Into the Spider-Verse",
-    "The Lion King","Beauty and the Beast","Aladdin","Spirited Away","Snow White"
+    "The Iron Giant","Fantastic Mr Fox","Coraline","Persepolis","Kubo and the Two Strings",
+    "Akira","Ghost in the Shell","The Secret of NIMH","The Red Turtle","Wolfwalkers"
   ],
 
   war: [
-    "Saving Private Ryan","1917","Dunkirk","Fury","Hacksaw Ridge",
-    "Apocalypse Now","Full Metal Jacket","Platoon","The Bridge on the River Kwai","Patton"
+    "Come and See","The Thin Red Line","Das Boot","Letters from Iwo Jima","Paths of Glory",
+    "Cross of Iron","The Deer Hunter","Breaker Morant","Gallipoli","Army of Shadows"
   ],
 
   western: [
-    "Django Unchained","Unforgiven","True Grit","The Hateful Eight","3:10 to Yuma",
-    "The Good the Bad and the Ugly","Once Upon a Time in the West","High Noon","Shane","Stagecoach"
+    "The Proposition","Dead Man","The Assassination of Jesse James","Slow West","Hostiles",
+    "The Ox-Bow Incident","Johnny Guitar","The Shootist","Ride the High Country","McCabe & Mrs Miller"
   ]
 };
 
