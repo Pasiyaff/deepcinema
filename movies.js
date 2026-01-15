@@ -18,19 +18,72 @@ const genreMap = {
   western: "Western"
 };
 
+/*
+  Each genre has:
+  - Modern hits
+  - Popular favorites
+  - 5–6 REAL classics
+*/
 const genreSeeds = {
-  action: ["Die Hard","Mad Max","John Wick","Gladiator","Terminator"],
-  adventure: ["Indiana Jones","Jurassic Park","Pirates","Mummy","Avatar"],
-  comedy: ["Superbad","Hangover","Step Brothers","Dumb and Dumber","Mask"],
-  drama: ["Shawshank","Forrest Gump","Godfather","Fight Club","Joker"],
-  horror: ["Halloween","Conjuring","It","Exorcist","Insidious"],
-  romance: ["Titanic","Notebook","La La Land","Casablanca","Her"],
-  thriller: ["Se7en","Gone Girl","Zodiac","Prisoners","Heat"],
-  scifi: ["Inception","Matrix","Interstellar","Blade Runner","Alien"],
-  fantasy: ["Lord of the Rings","Harry Potter","Hobbit","Pan","Willow"],
-  animation: ["Toy Story","Up","Frozen","Shrek","Lion King"],
-  war: ["Saving Private Ryan","1917","Dunkirk","Fury","Platoon"],
-  western: ["Django","Unforgiven","True Grit","Tombstone","Rio Bravo"]
+  action: [
+    "John Wick","Mad Max Fury Road","Gladiator","Die Hard","The Dark Knight",
+    "Terminator 2","Lethal Weapon","Rambo","Predator","Commando"
+  ],
+
+  adventure: [
+    "Indiana Jones","Jurassic Park","Pirates of the Caribbean","Avatar","The Mummy",
+    "King Kong","National Treasure","Jumanji","The Goonies","Lawrence of Arabia"
+  ],
+
+  comedy: [
+    "Superbad","The Hangover","Step Brothers","Anchorman","The Mask",
+    "Dumb and Dumber","Groundhog Day","Airplane","Monty Python","Some Like It Hot"
+  ],
+
+  drama: [
+    "The Shawshank Redemption","Forrest Gump","The Godfather","Fight Club","Joker",
+    "One Flew Over the Cuckoo's Nest","12 Angry Men","Schindler's List","Taxi Driver","Rocky"
+  ],
+
+  horror: [
+    "The Conjuring","It","Hereditary","Insidious","A Quiet Place",
+    "The Exorcist","Halloween","Psycho","The Shining","Nightmare on Elm Street"
+  ],
+
+  romance: [
+    "Titanic","La La Land","The Notebook","Before Sunrise","Her",
+    "Casablanca","Roman Holiday","Gone with the Wind","Pretty Woman","Notting Hill"
+  ],
+
+  thriller: [
+    "Se7en","Gone Girl","Zodiac","Prisoners","Shutter Island",
+    "Heat","The Silence of the Lambs","Chinatown","Rear Window","Cape Fear"
+  ],
+
+  scifi: [
+    "Inception","Interstellar","The Matrix","Blade Runner","Arrival",
+    "Alien","2001 A Space Odyssey","Terminator","E.T.","Close Encounters"
+  ],
+
+  fantasy: [
+    "The Lord of the Rings","Harry Potter","The Hobbit","Pan's Labyrinth","Stardust",
+    "Willow","Legend","The NeverEnding Story","Excalibur","Clash of the Titans"
+  ],
+
+  animation: [
+    "Toy Story","Up","Inside Out","Frozen","Spider-Man Into the Spider-Verse",
+    "The Lion King","Beauty and the Beast","Aladdin","Spirited Away","Snow White"
+  ],
+
+  war: [
+    "Saving Private Ryan","1917","Dunkirk","Fury","Hacksaw Ridge",
+    "Apocalypse Now","Full Metal Jacket","Platoon","The Bridge on the River Kwai","Patton"
+  ],
+
+  western: [
+    "Django Unchained","Unforgiven","True Grit","The Hateful Eight","3:10 to Yuma",
+    "The Good the Bad and the Ugly","Once Upon a Time in the West","High Noon","Shane","Stagecoach"
+  ]
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -45,7 +98,7 @@ let collected = [];
 async function loadMovies() {
   for (let seed of genreSeeds[type]) {
     const res = await fetch(
-      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${seed}&type=movie`
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(seed)}&type=movie`
     );
     const data = await res.json();
     if (data.Search) collected.push(...data.Search);
