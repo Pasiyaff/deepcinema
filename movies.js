@@ -18,72 +18,58 @@ const genreMap = {
   western: "Western"
 };
 
-/*
-  RULES FOLLOWED:
-  - No overused IMDb spam titles
-  - No genre crossover pollution
-  - Classics ≠ obvious top-10 IMDb
-  - Cleaner + more variety
-*/
+/* GLOBAL SET – prevents reuse */
+const usedIMDbIDs = new Set();
+
+/* Keyword pools per genre */
 const genreSeeds = {
   action: [
-    "The Raid","Extraction","Nobody","Upgrade","Atomic Blonde",
-    "Equilibrium","Dredd","Shoot Em Up","Ronin","Man on Fire"
+    "The Raid","Extraction","Dredd","Upgrade","Atomic Blonde",
+    "Nobody","Equilibrium","Man on Fire","Ronin","Hardcore Henry"
   ],
-
   adventure: [
-    "The Lost City of Z","King Solomon's Mines","Romancing the Stone","Journey to the Center of the Earth",
-    "The Secret Life of Walter Mitty","The Edge","Everest","Into the Wild","The Way Back","Master and Commander"
+    "The Lost City of Z","Into the Wild","Everest","Master and Commander",
+    "The Edge","Romancing the Stone","The Way Back","Journey to the Center of the Earth"
   ],
-
   comedy: [
-    "Game Night","The Nice Guys","Palm Springs","Office Space","Burn After Reading",
-    "Dr Strangelove","Midnight Run","Trading Places","The Jerk","Tootsie"
+    "Game Night","Palm Springs","The Nice Guys","Office Space",
+    "Burn After Reading","Midnight Run","Trading Places","Dr Strangelove"
   ],
-
   drama: [
-    "There Will Be Blood","Manchester by the Sea","Mystic River","Blue Valentine","The Wrestler",
-    "Dog Day Afternoon","Network","On the Waterfront","A Streetcar Named Desire","Ordinary People"
+    "There Will Be Blood","Manchester by the Sea","Mystic River",
+    "Blue Valentine","The Wrestler","Network","Dog Day Afternoon"
   ],
-
   horror: [
-    "The Descent","Sinister","It Follows","The Invitation","The Babadook",
-    "Rosemary's Baby","The Omen","Don't Look Now","Black Christmas","Invasion of the Body Snatchers"
+    "The Descent","It Follows","The Invitation","The Babadook",
+    "Sinister","Rosemary's Baby","The Omen","Black Christmas"
   ],
-
   romance: [
-    "Blue Valentine","Call Me by Your Name","Carol","Atonement","Before Sunset",
-    "Brief Encounter","An Affair to Remember","The Apartment","Moonstruck","The English Patient"
+    "Call Me by Your Name","Carol","Atonement","Before Sunset",
+    "Moonstruck","The Apartment","Brief Encounter"
   ],
-
   thriller: [
-    "Prisoners","Nightcrawler","No Country for Old Men","Wind River","Enemy",
-    "The Conversation","Blow Out","Body Heat","The Vanishing","Seconds"
+    "Prisoners","Nightcrawler","Wind River","Enemy",
+    "The Conversation","Blow Out","Body Heat","The Vanishing"
   ],
-
   scifi: [
-    "Ex Machina","Moon","Looper","Gattaca","Annihilation",
-    "Solaris","THX 1138","Primer","Dark City","Brazil"
+    "Ex Machina","Moon","Gattaca","Looper",
+    "Annihilation","Solaris","Primer","Dark City"
   ],
-
   fantasy: [
-    "The Green Knight","Legend","Excalibur","Willow","Stardust",
-    "Time Bandits","Ladyhawke","The Fall","Dragonslayer","Krull"
+    "The Green Knight","Willow","Stardust","Legend",
+    "Excalibur","Ladyhawke","The Fall"
   ],
-
   animation: [
-    "The Iron Giant","Fantastic Mr Fox","Coraline","Persepolis","Kubo and the Two Strings",
-    "Akira","Ghost in the Shell","The Secret of NIMH","The Red Turtle","Wolfwalkers"
+    "The Iron Giant","Fantastic Mr Fox","Coraline",
+    "Persepolis","Akira","Ghost in the Shell","Wolfwalkers"
   ],
-
   war: [
-    "Come and See","The Thin Red Line","Das Boot","Letters from Iwo Jima","Paths of Glory",
-    "Cross of Iron","The Deer Hunter","Breaker Morant","Gallipoli","Army of Shadows"
+    "Come and See","The Thin Red Line","Das Boot",
+    "Paths of Glory","Letters from Iwo Jima","Army of Shadows"
   ],
-
   western: [
-    "The Proposition","Dead Man","The Assassination of Jesse James","Slow West","Hostiles",
-    "The Ox-Bow Incident","Johnny Guitar","The Shootist","Ride the High Country","McCabe & Mrs Miller"
+    "The Proposition","Dead Man","Slow West",
+    "Hostiles","The Ox-Bow Incident","McCabe & Mrs Miller"
   ]
 };
 
@@ -94,18 +80,28 @@ document.getElementById("genreTitle").textContent =
   `Top 30 ${genreMap[type]} Movies`;
 
 const container = document.getElementById("movies");
-let collected = [];
 
 async function loadMovies() {
+  let collected = [];
+
   for (let seed of genreSeeds[type]) {
+    if (collected.length >= 30) break;
+
     const res = await fetch(
       `https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(seed)}&type=movie`
     );
     const data = await res.json();
-    if (data.Search) collected.push(...data.Search);
-  }
+    if (!data.Search) continue;
 
-  collected = collected.slice(0, 30);
+    for (let item of data.Search) {
+      if (usedIMDbIDs.has(item.imdbID)) continue;
+
+      usedIMDbIDs.add(item.imdbID);
+      collected.push(item);
+
+      if (collected.length >= 30) break;
+    }
+  }
 
   for (let item of collected) {
     const res = await fetch(
